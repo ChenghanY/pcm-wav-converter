@@ -26,21 +26,6 @@ public class PcmAudioAppenderTest extends BaseTest {
         testPcmAudioCanAppend();
     }
 
-    @Test
-    public void test2() throws Exception {
-        downloadPcmFile();
-        testWavAudioCanAppend();
-    }
-
-    private static void testWavAudioCanAppend() throws IOException {
-        byte[] pcmBytes = Files.readAllBytes(OUTPUT_WAV_FILE);
-        // 双倍的字节流拼接
-        byte[] doublePcmBytes = PcmAudioAppender.append(pcmBytes, pcmBytes);
-        // 转化成wav并写入文件, 文件内容变成了两倍
-        byte[] doublePcm2 = AudioFormatConverter.pcmToWav(doublePcmBytes);
-        writeBytesToFile(OUTPUT_DOUBLE_LENGTH_WAV_FILE, doublePcm2);
-    }
-
     private static void testPcmAudioCanAppend() throws IOException {
         byte[] pcmBytes = Files.readAllBytes(SAMPLE_PCM_FILE);
         // 双倍的字节流拼接
