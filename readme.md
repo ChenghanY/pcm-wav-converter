@@ -22,10 +22,23 @@
 3. 能支持幂等执行测试用例，可debug进行调试
 
 ## 3. 补充验证
+- 字节数组的拼接
 项目中语音数据通过字节流传播，对 pcm 数据可以任意裁剪叠加。
 pcm 数据增加一倍，音频播放的内容重复一遍。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/direct/514cfbbaf433436088ac4298532188f7.png)
 
+- base64 字符串的拼接
+对byte[]进行base64编码。byte[]场景下，两段base64字符串拼接后，验证无法正常解码为byte[]。
+```
+         Assertions.assertThatIllegalArgumentException().isThrownBy(() -> {
+            // 对二进制进行 base64
+            byte[] pcmBytes = Files.readAllBytes(SAMPLE_PCM_FILE);
+            // 两段 base64 拼接
+            String base64 = Base64.getEncoder().encodeToString(pcmBytes) + Base64.getEncoder().encodeToString(pcmBytes);
+            // 解码
+            Base64.getDecoder().decode(base64);
+        });
+```
 
 ## 4. 相关链接
 [【Java】字节数组 pcm 与 wav 格式互转 （附原理概述）](https://blog.csdn.net/chenghan_yang/article/details/139881216)
