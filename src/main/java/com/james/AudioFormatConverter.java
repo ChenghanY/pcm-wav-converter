@@ -35,7 +35,7 @@ public class AudioFormatConverter {
 
     private static byte[] changeFormatToWav(byte[] audioFileContent) {
         AudioFormat format = new AudioFormat(
-                8_000,
+                RATE,
                 16,
                 CHANNELS,
                 true,
